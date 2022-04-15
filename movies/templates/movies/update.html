@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="text-center">수정페이지</h1>
+  <hr>
+  <form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="d-flex justify-content-end">
+      <input type="submit" value="수정완료"  class="btn btn-primary btn-sm mx-2 ">
+      <a href="{% url 'movies:detail' movie.pk %}"  class="btn btn-danger btn-sm">뒤로가기</a>
+    </div>
+
+  </form>
+{% endblock content %}
+
+

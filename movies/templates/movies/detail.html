@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+  <a href="{% url 'movies:index' %}">메인페이지</a>
+  <div>
+    <p>제목 : {{ movie.title }}</p>
+  </div>
+  <div>
+    <p>내용 : {{ movie.description }}</p>
+  </div>
+</div>
+<a href="{% url 'movies:update' movie.pk %}">수정하기</a>
+<div>
+  <form action="{% url 'movies:delete' movie.pk %}" method='POST'>
+    {% csrf_token %}
+    <input type="submit" value="삭제하기">
+  </form>
+</div>
+<div>
+<form action="{% url 'movies:comments_create' movie.pk %}" method="POST">
+  {% csrf_token %}
+  {{ comment_form.as_p }}
+  <input type="submit" value="덧글 달기">
+</form>
+</div>
+<div>
+{% for comment in comments %}
+<div>
+  {{ forloop.counter }}번째 덧글 : {{ comment.content }}
+  <form action="{% url 'movies:comments_delete' movie.pk comment.pk %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value='삭제'>
+  </form>
+</div>
+{% empty %}
+<p>덧글 없어요 ㅠㅠ</p>
+{% endfor %}
+</div>
+
+{% endblock content %}
